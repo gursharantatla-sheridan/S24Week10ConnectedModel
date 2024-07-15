@@ -53,6 +53,7 @@ namespace S24Week10ConnectedModel
                 // string concatenation - DO NOT USE IT
                 //string query = "select EmployeeID, FirstName, LastName, City from Employees where FirstName='" + txtFirstname.Text + "'";
 
+                // command parameters
                 // paramterized query - USE THIS
                 string query = "select EmployeeID, FirstName, LastName, City from Employees where FirstName=@fn";
 
@@ -66,6 +67,21 @@ namespace S24Week10ConnectedModel
                 tbl.Load(reader);
 
                 grdEmployees.ItemsSource = tbl.DefaultView;
+            }
+        }
+
+        private void btnCount_Click(object sender, RoutedEventArgs e)
+        {
+            using (SqlConnection conn = new SqlConnection(Data.ConnectionStr))
+            {
+                string query = "select count(*) from Employees";
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+
+                int numRows = (int)cmd.ExecuteScalar();
+
+                MessageBox.Show("Number of rows = " + numRows);
             }
         }
     }
