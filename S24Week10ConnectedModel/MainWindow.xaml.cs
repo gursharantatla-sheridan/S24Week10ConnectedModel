@@ -51,8 +51,13 @@ namespace S24Week10ConnectedModel
             using (SqlConnection conn = new SqlConnection(Data.ConnectionStr))
             {
                 // string concatenation - DO NOT USE IT
-                string query = "select EmployeeID, FirstName, LastName, City from Employees where FirstName='" + txtFirstname.Text + "'";
+                //string query = "select EmployeeID, FirstName, LastName, City from Employees where FirstName='" + txtFirstname.Text + "'";
+
+                // paramterized query - USE THIS
+                string query = "select EmployeeID, FirstName, LastName, City from Employees where FirstName=@fn";
+
                 SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("fn", txtFirstname.Text);
 
                 conn.Open();
 
